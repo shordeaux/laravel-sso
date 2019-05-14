@@ -62,7 +62,7 @@ class LaravelSSOBroker extends SSOBroker
         if (isset($this->token) && $this->token) {
             return;
         }
-
+    
         if ($this->token = Cookie::get($this->getCookieName(), null)) {
             return;
         }

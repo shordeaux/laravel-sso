@@ -22,7 +22,7 @@ class SSOAutoLogin
 
         // If client is logged out in SSO server but still logged in broker.
         if (!isset($response['data']) && !auth()->guest()) {
-            return $this->logout($request);
+            //return $this->logout($request);
         }
 
         // If there is a problem with data in SSO server, we will re-attach client session.
@@ -30,10 +30,15 @@ class SSOAutoLogin
             return $this->clearSSOCookie($request);
         }
 
+        $username = config('laravel-sso.username');
         // If client is logged in SSO server and didn't logged in broker...
-        if (isset($response['data']) && (auth()->guest() || auth()->user()->id != $response['data']['id'])) {
+        if (isset($response['data']) && (auth()->guest() || auth()->user()->$username != $response['data'][$username])) {
             // ... we will authenticate our client.
-            auth()->loginUsingId($response['data']['id']);
+            $user = config('laravel-sso.usersModel')::where($username, $response['data'][$username])->first();
+            if(empty($user)){
+                return $this->logut($request);
+            }
+            auth()->loginUsingId($user->id);
         }
 
         return $next($request);

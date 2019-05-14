@@ -16,6 +16,17 @@ return [
 
     /*
      |--------------------------------------------------------------------------
+     | Settings necessary for the SSO server & broker.
+     |--------------------------------------------------------------------------
+     |
+     | These settings should be changed if this page is working as Both for SSO Server & broker
+     |
+     */
+
+    'usersModel' => \App\User::class,
+    'username'  =>  "email",
+    /*
+     |--------------------------------------------------------------------------
      | Settings necessary for the SSO server.
      |--------------------------------------------------------------------------
      |
@@ -23,7 +34,7 @@ return [
      |
      */
 
-    'usersModel' => \App\User::class,
+
     'brokersModel' => Zefy\LaravelSSO\Models\Broker::class,
 
     // Table used in Zefy\LaravelSSO\Models\Broker model
@@ -33,6 +44,7 @@ return [
     'userFields' => [
         // Return array field name => database column name
         'id' => 'id',
+        'email' => 'email',
     ],
 
     /*
