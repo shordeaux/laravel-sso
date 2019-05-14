@@ -90,8 +90,7 @@ class LaravelSSOServer extends SSOServer
     protected function getBrokerInfo(string $brokerId)
     {
         try {
-            $authUsername = config('laravel-sso.username', "username");
-            $user = config('laravel-sso.usersModel')::where($authUsername, $username)->firstOrFail();
+            $broker = config('laravel-sso.brokersModel')::where('name', $brokerId)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return null;
         }
@@ -109,7 +108,8 @@ class LaravelSSOServer extends SSOServer
     protected function getUserInfo(string $username)
     {
         try {
-            $user = config('laravel-sso.usersModel')::where('username', $username)->firstOrFail();
+            $authUsername = config('laravel-sso.username', "username");
+            $user = config('laravel-sso.usersModel')::where($authUsername, $username)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return null;
         }
