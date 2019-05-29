@@ -1,5 +1,5 @@
 {
-    "name": "ateam-group/laravel-sso",
+    "name": "vivoka/laravel-sso",
     "description": "Simple PHP SSO integration for Laravel",
     "keywords": ["laravel", "sso", "authentication", "login"],
     "homepage": "https://github.com/vivoka/laravel-sso.git",
