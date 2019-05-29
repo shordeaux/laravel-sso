@@ -23,7 +23,10 @@ class SSOServiceProvider extends ServiceProvider
     {
         $this->publishConfig(__DIR__ . '/../config/' . $this->configFileName);
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        if(config('laravel-sso.type') === 'server') {
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        }
+
 
         if ($this->app->runningInConsole()) {
             $this->commands([

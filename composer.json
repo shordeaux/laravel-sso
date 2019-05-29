@@ -2,13 +2,13 @@
     "name": "ateam-group/laravel-sso",
     "description": "Simple PHP SSO integration for Laravel",
     "keywords": ["laravel", "sso", "authentication", "login"],
-    "homepage": "https://github.com/ateam-group/laravel-sso.git",
+    "homepage": "https://github.com/vivoka/laravel-sso.git",
     "license": "MIT",
     "authors": [
       {
-        "name": "Martynas Žaliaduonis",
-        "email": "m.zaliaduonis@gmail.com",
-        "homepage": "https://github.com/ateam-group",
+        "name": "Vivoka",
+        "email": "developpeur@vivoka.com",
+        "homepage": "https://github.com/vivoka",
         "role": "Developer"
       }
     ],

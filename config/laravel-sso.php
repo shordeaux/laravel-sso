@@ -24,7 +24,7 @@ return [
      */
 
     'usersModel' => \App\User::class,
-    'username'  =>  "email",
+    'username'  => 'email',
     /*
      |--------------------------------------------------------------------------
      | Settings necessary for the SSO server.
