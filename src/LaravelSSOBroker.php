@@ -169,4 +169,24 @@ class LaravelSSOBroker extends SSOBroker
         // and we need to prevent duplications.
         return 'sso_token_' . preg_replace('/[_\W]+/', '_', strtolower($this->brokerName));
     }
+
+
+    /**
+     * @param $returnUrl
+     * @return mixed
+     */
+    public function redirectToSsoServer( $returnUrl)
+    {
+
+        $sessionId = base64_encode($this->getSessionId());
+
+        $url = $this->generateCommandUrl('brokers/login/'. $sessionId, [ 'return_url' => $returnUrl ]);
+
+        $headers = [
+            'Authorization' => 'Bearer '. $sessionId,
+        ];
+
+        return redirect()->away($url, 307, $headers);
+
+    }
 }

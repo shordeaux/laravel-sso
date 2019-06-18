@@ -56,4 +56,16 @@ class ServerController extends BaseController
     {
         return $server->userInfo();
     }
+
+    /**
+     * @param Request          $request
+     * @param LaravelSSOServer $server
+     * @return mixed
+     */
+    public function loginFromBrokers(Request $request, LaravelSSOServer $server)
+    {
+        $server->authenticateFromBrokers();
+
+        return redirect($request->get('return_url')  ?? '/' );
+    }
 }

@@ -80,6 +80,18 @@ class LaravelSSOServer extends SSOServer
         return true;
     }
 
+
+    /**
+     * Authenticate user from brokers
+     * @return mixed
+     */
+    public function authenticateFromBrokers()
+    {
+        // when the user is recovered
+        // Session is set with Bearer
+        return $this->userInfo();
+    }
+
     /**
      * Get the secret key and other info of a broker
      *
