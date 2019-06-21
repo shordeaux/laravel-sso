@@ -16,7 +16,7 @@ class AddTokenToLoginFromBrokers
     public function handle($request, Closure $next)
     {
 
-        if($request->headers->has('Authorization')) {
+        if($request->route()->hasParameter('token')) {
             $request->headers->set('Authorization', 'Bearer ' . base64_decode($request->route()->parameter('token')));
         }
 
