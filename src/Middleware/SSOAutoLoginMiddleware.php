@@ -31,10 +31,12 @@ class SSOAutoLoginMiddleware
         }
 
         $username = config('laravel-sso.username');
+        $remoteUserName = config('laravel-sso.remoteUserName');
         // If client is logged in SSO server and didn't logged in broker...
-        if (isset($response['data']) && (auth()->guest() || auth()->user()->$username != $response['data'][$username])) {
+        if (isset($response['data']) && (auth()->guest() || auth()->user()->$username != $response['data'][$remoteUserName])) {
             // ... we will authenticate our client.
-            $user = config('laravel-sso.usersModel')::where($username, $response['data'][$username])->first();
+            $user = config('laravel-sso.usersModel')::where($username, $response['data'][$remoteUserName])->first();
+
             if(empty($user)){
                 return $this->logout($request);
             }
@@ -64,7 +66,12 @@ class SSOAutoLoginMiddleware
      */
     protected function logout(Request $request)
     {
-        auth()->logout();
-        return redirect($request->fullUrl());
+        if (!auth()->guest()) {
+            auth()->logout();
+        }
+
+        $cookie = cookie()->forget('sso_token_' . config('laravel-sso.brokerName'));
+
+        return redirect(config('laravel-sso.logoutUrl'))->withCookie($cookie);
     }
 }
