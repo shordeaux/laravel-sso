@@ -120,27 +120,26 @@ protected function attemptLogin(Request $request)
 
 public function logout(Request $request)
 {
-    $broker = new \Zefy\LaravelSSO\LaravelSSOBroker;
+    $broker = new LaravelSSOBroker;
     
     $broker->logout();
-    
+
     $this->guard()->logout();
-    
+
     $request->session()->invalidate();
-    
-    return redirect('/');
+
+    $cookie = cookie()->forget('sso_token_' . config('laravel-sso.brokerName'));
+
+    return redirect(config('laravel-sso.logoutUrl'))->withCookie($cookie);
 }
 ```
 
-
 That's all. For other Broker pages you should repeat everything from the beginning just changing your Broker name and secret in configuration file.
-
-
-
 
 Example `.env` options:
 ```shell
 SSO_SERVER_URL=https://server.test
 SSO_BROKER_NAME=site1
 SSO_BROKER_SECRET=892asjdajsdksja74jh38kljk2929023
+SSO_BROKER_LOGOUT_URL="/login"
 ```
