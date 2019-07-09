@@ -1,15 +1,15 @@
 {
-    "name": "vivoka/laravel-sso",
+    "name": "builtwellstudio/laravel-sso",
     "description": "Simple PHP SSO integration for Laravel",
     "keywords": ["laravel", "sso", "authentication", "login"],
-    "homepage": "https://github.com/vivoka/laravel-sso.git",
+    "homepage": "https://github.com/builtwellstudio/laravel-sso",
     "license": "MIT",
     "authors": [
       {
-        "name": "Vivoka",
-        "email": "developper@vivoka.com",
-        "homepage": "https://github.com/vivoka",
-        "role": "Developer"
+        "name": "Doug Niccum",
+        "email": "doug@builtwellstudio.com",
+        "homepage": "https://github.com/dniccum",
+        "role": "Lead Developer"
       }
     ],
     "require": {
