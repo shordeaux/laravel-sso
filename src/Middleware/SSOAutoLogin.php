@@ -36,7 +36,7 @@ class SSOAutoLogin
             // ... we will authenticate our client.
             $user = config('laravel-sso.usersModel')::where($username, $response['data'][$username])->first();
             if(empty($user)){
-                return $this->logut($request);
+                return $this->logout($request);
             }
             auth()->loginUsingId($user->id);
         }
