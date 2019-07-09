@@ -93,6 +93,7 @@ class LaravelSSOBroker extends SSOBroker
      * @param string $command Request command name.
      * @param array $parameters Parameters for URL query string if GET request and form parameters if it's POST request.
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @return array
      */
     protected function makeRequest(string $method, string $command, array $parameters = [])
@@ -188,5 +189,42 @@ class LaravelSSOBroker extends SSOBroker
 
         return redirect()->away($url, 307, $headers);
 
+    }
+
+    /**
+     * Login client to SSO server with user credentials.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return bool
+     */
+    public function login(string $username, string $password)
+    {
+        $this->userInfo = $this->makeRequest('POST', 'login', compact('username', 'password'));
+
+        if (!isset($this->userInfo['error']) && isset($this->userInfo['data']['id'])) {
+
+            $userModel = config('laravel-sso.usersModel');
+            $username = config('laravel-sso.username');
+            $remoteUserName = config('laravel-sso.remoteUserName');
+
+            $user = config('laravel-sso.usersModel')::where($username, $this->userInfo['data'][$remoteUserName])->first();
+
+            if (!$user) {
+                $user = new $userModel;
+                $user->$username = $this->userInfo['data'][$remoteUserName];
+                $user->save();
+            }
+
+            if (auth()->guest()) {
+                auth()->loginUsingId($user->id, true);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }
