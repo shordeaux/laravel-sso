@@ -25,6 +25,10 @@ return [
 
     'usersModel' => \App\User::class,
     'username'  => 'email',
+
+    // If the user name that is used within the broker is different than the server
+    'localUserName' => 'email',
+
     /*
      |--------------------------------------------------------------------------
      | Settings necessary for the SSO server.
@@ -59,4 +63,5 @@ return [
     'serverUrl' => env('SSO_SERVER_URL', null),
     'brokerName' => env('SSO_BROKER_NAME', null),
     'brokerSecret' => env('SSO_BROKER_SECRET', null),
+    'logoutUrl' => env('SSO_BROKER_LOGOUT_URL', '/')
 ];
