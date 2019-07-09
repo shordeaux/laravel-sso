@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Zefy\LaravelSSO\LaravelSSOBroker;
 
-class SSOAutoLogin
+class SSOAutoLoginMiddleware
 {
     /**
      * Handle an incoming request.
@@ -22,7 +22,7 @@ class SSOAutoLogin
 
         // If client is logged out in SSO server but still logged in broker.
         if (!isset($response['data']) && !auth()->guest()) {
-            //return $this->logout($request);
+            return $this->logout($request);
         }
 
         // If there is a problem with data in SSO server, we will re-attach client session.
