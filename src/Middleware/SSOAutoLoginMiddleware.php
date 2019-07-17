@@ -5,6 +5,7 @@ namespace Zefy\LaravelSSO\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Zefy\LaravelSSO\LaravelSSOBroker;
+use Illuminate\Support\Facades\Log;
 
 class SSOAutoLoginMiddleware
 {
@@ -20,13 +21,17 @@ class SSOAutoLoginMiddleware
         $broker = new LaravelSSOBroker();
         $response = $broker->getUserInfo();
 
+        Log::debug('broker response', $response);
+
         // If client is logged out in SSO server but still logged in broker.
         if (!isset($response['data']) && !auth()->guest()) {
+            Log::debug('client log out');
             return $this->logout($request);
         }
 
         // If there is a problem with data in SSO server, we will re-attach client session.
         if (isset($response['error']) && strpos($response['error'], 'There is no saved session data associated with the broker session id') !== false) {
+            Log::debug('reset cookie');
             return $this->clearSSOCookie($request);
         }
 
@@ -37,7 +42,12 @@ class SSOAutoLoginMiddleware
             // ... we will authenticate our client.
             $user = config('laravel-sso.usersModel')::where($username, $response['data'][$remoteUserName])->first();
 
+            Log::debug('user authentication', [
+                'user' => $user
+            ]);
+
             if(empty($user)){
+                Log::debug('user logout');
                 return $this->logout($request);
             }
             auth()->loginUsingId($user->id);
