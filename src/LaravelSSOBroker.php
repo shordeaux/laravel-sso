@@ -205,7 +205,9 @@ class LaravelSSOBroker extends SSOBroker
     {
         $this->userInfo = $this->makeRequest('POST', 'login', compact('username', 'password'));
 
-        Log::debug('user info'. json_encode($this->userInfo));
+        Log::debug('user info'. json_encode($this->userInfo), [
+            'credentials' => compact('username', 'password')
+        ]);
 
         if (!isset($this->userInfo['error']) && isset($this->userInfo['data']['id'])) {
 
