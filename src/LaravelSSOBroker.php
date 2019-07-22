@@ -3,6 +3,7 @@
 namespace Zefy\LaravelSSO;
 
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Log;
 use Zefy\LaravelSSO\Exceptions\MissingConfigurationException;
 use Zefy\SimpleSSO\SSOBroker;
 use GuzzleHttp;
@@ -203,6 +204,8 @@ class LaravelSSOBroker extends SSOBroker
     public function login(string $username, string $password)
     {
         $this->userInfo = $this->makeRequest('POST', 'login', compact('username', 'password'));
+
+        Log::debug('user info'. $this->userInfo);
 
         if (!isset($this->userInfo['error']) && isset($this->userInfo['data']['id'])) {
 
