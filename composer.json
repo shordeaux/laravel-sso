@@ -1,5 +1,5 @@
 {
-    "name": "builtwellstudio/laravel-sso",
+    "name": "shordeaux/laravel-sso",
     "description": "Simple PHP SSO integration for Laravel",
     "keywords": ["laravel", "sso", "authentication", "login"],
     "homepage": "https://github.com/builtwellstudio/laravel-sso",
